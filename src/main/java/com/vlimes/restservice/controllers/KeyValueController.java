@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vlimes.restservice.exceptions.KeyValueNotFoundException;
 import com.vlimes.restservice.model.KeyValue;
 import com.vlimes.restservice.services.KeyValueService;
 
@@ -40,7 +41,7 @@ public class KeyValueController {
         KeyValue keyvalue = keyValueService.findById(id);
 
         if(keyvalue == null) {
-            throw new RuntimeException("KeyValue id not found -"+id);
+            throw new KeyValueNotFoundException(id);
         }
         //retornará al usuario con id pasado en la url
         return keyvalue;
@@ -50,7 +51,7 @@ public class KeyValueController {
     http://127.0.0.1:8080/api/keyvalues/  */
     @PostMapping("/keyvalues")
     public KeyValue addKeyValue(@RequestBody KeyValue keyvalue) {
-        keyvalue.setId(0L);
+        //keyvalue.setId(0L);
 
         //Este metodo guardará al usuario enviado
         keyValueService.save(keyvalue);
@@ -78,7 +79,7 @@ public class KeyValueController {
         KeyValue keyvalue = keyValueService.findById(id);
 
         if(keyvalue == null) {
-            throw new RuntimeException("KeyValue id not found -"+id);
+            throw new KeyValueNotFoundException(id);
         }
 
         keyValueService.deleteById(id);
