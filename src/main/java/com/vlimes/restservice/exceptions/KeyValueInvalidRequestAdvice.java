@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class KeyValueNotFoundAdvice {
+public class KeyValueInvalidRequestAdvice {
 	@ResponseBody
-	@ExceptionHandler(KeyValueNotFoundException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	String keyValueNotFoundHandler(KeyValueNotFoundException ex) {
+	@ExceptionHandler(KeyValueInvalidRequestException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	String keyValueNotFoundHandler(KeyValueInvalidRequestException ex) {
 		return ex.getMessage();
 	}
 }

@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vlimes.restservice.exceptions.KeyValueInvalidRequestException;
 import com.vlimes.restservice.exceptions.KeyValueNotFoundException;
 import com.vlimes.restservice.model.KeyValue;
 import com.vlimes.restservice.services.KeyValueService;
 
 @RestController
 @RequestMapping("/api") //esta sera la raiz de la url, es decir http://127.0.0.1:8080/api/
-
 public class KeyValueController {
 
 	private final KeyValueService keyValueService;
@@ -63,7 +63,16 @@ public class KeyValueController {
     http://127.0.0.1:8080/api/keyvalues/  */
     @PutMapping("/keyvalues")
     public KeyValue updateKeyValue(@RequestBody KeyValue keyvalue) {
-
+    	if (keyvalue == null || keyvalue.getId() == null) {
+            throw new KeyValueInvalidRequestException("KeyValue or ID must not be null");
+        }
+    	
+        KeyValue keyValueFound = keyValueService.findById(keyvalue.getId());
+        
+        if (keyValueFound == null) {
+            throw new KeyValueNotFoundException(keyvalue.getId());
+        }
+        
         keyValueService.save(keyvalue);
 
         //este metodo actualizará al usuario enviado
