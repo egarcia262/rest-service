@@ -9,6 +9,12 @@ import org.springframework.stereotype.Component;
 import com.vlimes.restservice.model.KeyValue;
 import com.vlimes.restservice.services.KeyValueService;
 
+/**
+ * Test data load.
+ * 
+ * @author 48384541q
+ *
+ */
 @Component
 public class DataLoader implements CommandLineRunner {
 

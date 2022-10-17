@@ -16,6 +16,12 @@ import com.vlimes.restservice.exceptions.KeyValueNotFoundException;
 import com.vlimes.restservice.model.KeyValue;
 import com.vlimes.restservice.services.KeyValueService;
 
+/**
+ * Controller rest service.
+ * 
+ * @author 48384541q
+ *
+ */
 @RestController
 @RequestMapping("/api")
 public class KeyValueController {

@@ -9,13 +9,19 @@ import com.vlimes.restservice.model.KeyValue;
 import com.vlimes.restservice.repositories.KeyValueRepository;
 import com.vlimes.restservice.services.KeyValueService;
 
+/**
+ * KeyValue Jpa Implement
+ * 
+ * @author 48384541q
+ *
+ */
 @Service
-public class KeyValueJpaService implements KeyValueService {
+public class KeyValueServiceJpaImpl implements KeyValueService {
 
 	private final KeyValueRepository keyValueRepository;
 	
 	
-	public KeyValueJpaService(KeyValueRepository keyValueRepository) {
+	public KeyValueServiceJpaImpl(KeyValueRepository keyValueRepository) {
 		this.keyValueRepository = keyValueRepository;
 	}
 
