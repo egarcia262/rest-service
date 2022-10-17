@@ -17,7 +17,7 @@ import com.vlimes.restservice.model.KeyValue;
 import com.vlimes.restservice.services.KeyValueService;
 
 @RestController
-@RequestMapping("/api") //esta sera la raiz de la url, es decir http://127.0.0.1:8080/api/
+@RequestMapping("/api")
 public class KeyValueController {
 
 	private final KeyValueService keyValueService;
@@ -26,16 +26,21 @@ public class KeyValueController {
     	this.keyValueService = service;
     }
 
-    /*Este método se hará cuando por una petición GET (como indica la anotación) se llame a la url 
-    http://127.0.0.1:8080/api/keyvalues*/
+    /*
+     * Get all register request
+     * 
+     * http://127.0.0.1:8080/api/keyvalues
+     * */
     @GetMapping("/keyvalues")
     public Set<KeyValue> findAll(){
-        //retornará todos los usuarios
         return keyValueService.findAll();
     }
 
-    /*Este método se hará cuando por una petición GET (como indica la anotación) se llame a la url + el id de un usuario
-    http://127.0.0.1:8080/api/keyvalues/1*/
+    /*
+     * Get specific register request
+     * 
+     * http://127.0.0.1:8080/api/keyvalues/{id}
+     * */
     @GetMapping("/keyvalues/{id}")
     public KeyValue getKeyValue(@PathVariable long id){
         KeyValue keyvalue = keyValueService.findById(id);
@@ -43,24 +48,29 @@ public class KeyValueController {
         if(keyvalue == null) {
             throw new KeyValueNotFoundException(id);
         }
-        //retornará al usuario con id pasado en la url
+        
         return keyvalue;
     }
 
-    /*Este método se hará cuando por una petición POST (como indica la anotación) se llame a la url
-    http://127.0.0.1:8080/api/keyvalues/  */
+    /*
+     * Add register request
+     * 
+     * http://127.0.0.1:8080/api/keyvalues/  
+     * */
     @PostMapping("/keyvalues")
     public KeyValue addKeyValue(@RequestBody KeyValue keyvalue) {
-        //keyvalue.setId(0L);
-
-        //Este metodo guardará al usuario enviado
-        keyValueService.save(keyvalue);
+        
+    	keyValueService.save(keyvalue);
 
         return keyvalue;
 
     }
-    /*Este método se hará cuando por una petición PUT (como indica la anotación) se llame a la url
-    http://127.0.0.1:8080/api/keyvalues/  */
+    
+    /*
+     * Update request
+     * 
+     * http://127.0.0.1:8080/api/keyvalues/  
+     * */
     @PutMapping("/keyvalues")
     public KeyValue updateKeyValue(@RequestBody KeyValue keyvalue) {
     	if (keyvalue == null || keyvalue.getId() == null) {
@@ -74,14 +84,15 @@ public class KeyValueController {
         }
         
         keyValueService.save(keyvalue);
-
-        //este metodo actualizará al usuario enviado
-
+        
         return keyvalue;
     }
 
-    /*Este método se hará cuando por una petición DELETE (como indica la anotación) se llame a la url + id del usuario
-    http://127.0.0.1:8080/api/keyvalues/1  */
+    /*
+     * Delete register request
+     * 
+     * http://127.0.0.1:8080/api/keyvalues/{id}  
+     * */
     @DeleteMapping("keyvalues/{id}")
     public String deteteKeyValue(@PathVariable long id) {
 
@@ -93,7 +104,6 @@ public class KeyValueController {
 
         keyValueService.deleteById(id);
 
-        //Esto método, recibira el id de un usuario por URL y se borrará de la bd.
         return "Deleted keyvalue id - "+id;
     }
 
